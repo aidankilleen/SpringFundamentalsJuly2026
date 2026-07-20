@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="java.lang.String">
+        <constructor-arg value="This is a string created by Spring"></constructor-arg>
+    </bean>
+
+    <bean class="ie.pt.User" id="u1">
+        <constructor-arg value="2"/>
+        <constructor-arg value="Bob"/>
+        <constructor-arg value="bob@gmail.com"/>
+        <constructor-arg value="false"/>
+    </bean>
+    <bean class="ie.pt.User" id="u2">
+        <constructor-arg value="3"/>
+        <constructor-arg value="Carol"/>
+        <constructor-arg value="carol@gmail.com"/>
+        <constructor-arg value="true"/>
+    </bean>
+    <bean class="ie.pt.SqliteUserDao"/>
+</beans>
