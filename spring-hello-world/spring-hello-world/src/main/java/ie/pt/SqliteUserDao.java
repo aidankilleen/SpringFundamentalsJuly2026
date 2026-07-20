@@ -13,7 +13,7 @@ import java.util.List;
  * @author Aidan Killeen
  * @version 1.0
  */
-@Component
+
 public class SqliteUserDao implements UserDao {
 
     private static String defaultFileName = "C:\\work\\training\\java\\users.db";
