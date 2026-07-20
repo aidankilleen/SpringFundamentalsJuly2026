@@ -23,7 +23,8 @@ public class AppConfig {
         return new User(4, "Dan", "dan@gmail.com", true);
     }
 
+
     public UserDao getRepo() {
-        return new SqliteUserDao();
+        return new InMemoryUserDao();
     }
 }

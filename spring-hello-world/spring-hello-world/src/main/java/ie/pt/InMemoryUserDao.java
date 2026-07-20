@@ -5,12 +5,13 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class InMemoryUserDao implements UserDao {
 
     private List<User> users = new ArrayList<>();
 
     public InMemoryUserDao() {
-        this.users.add(new User(1, "Alice", "alice@gmail.com", true));
+        this.users.add(new User(1, "Alice", "alice@gmail.com", false));
         this.users.add(new User(2, "Bob", "bob@gmail.com", true));
         this.users.add(new User(3, "Carol", "carol@gmail.com", false));
         this.users.add(new User(4, "Dan", "dan@gmail.com", true));
