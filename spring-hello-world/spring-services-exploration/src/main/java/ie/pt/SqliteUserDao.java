@@ -1,5 +1,6 @@
 package ie.pt;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -14,36 +15,41 @@ import java.util.List;
  * @author Aidan Killeen
  * @version 1.0
  */
-@Repository // use @Repository instead of @Component for Database related beans
+@Repository// use @Repository instead of @Component for Database related beans
 public class SqliteUserDao implements UserDao {
 
-    private static String defaultFileName = "C:\\work\\training\\java\\userdb.db";
+    @Value("${database.defaultFile}")
+    private String defaultFileName="";
     private Connection conn;
 
     /**
      * create the dao object using the default filename
      *
      */
+    /*
     public SqliteUserDao() {
 
         // call the other constructor
         // with the defaultFileName
         this(defaultFileName);
     }
+    */
 
     /**
      *
      * @param fileName the filename for the database.
      *                 note: file will be created if it doesn't exist
      */
-    public SqliteUserDao(String fileName) {
-        String connectionString = "jdbc:sqlite:" + fileName;
+    public SqliteUserDao(@Value("${database.url}")String url) {
+        // System.out.println("SqliteUserDao - opening db" + fileName);
+        // String connectionString = "jdbc:sqlite:" + fileName;
         try {
-            conn = DriverManager.getConnection(connectionString);
+            conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void createDatabase() {
         try {
             Statement stmt = conn.createStatement();
