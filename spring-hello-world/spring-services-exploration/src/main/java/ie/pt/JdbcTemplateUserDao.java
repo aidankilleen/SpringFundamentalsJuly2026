@@ -3,11 +3,14 @@ package ie.pt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
-@Component
+//@Component
 public class JdbcTemplateUserDao implements UserDao {
 
     @Autowired
@@ -28,12 +31,40 @@ public class JdbcTemplateUserDao implements UserDao {
 
     @Override
     public User getUser(int id) {
-        return null;
+        String sql = "SELECT * FROM users WHERE id=?";
+        List<User> users = jdbc.query(sql, userMapper, id);
+        return users.isEmpty() ? null : users.get(0);
     }
 
     @Override
     public User addUser(User user) {
-        return null;
+        String sql = """
+                INSERT INTO users
+                (name, email, active)
+                VALUES(?, ?, ?)
+                """;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        // jdbc.update((sql, 1, "", "", false);
+
+        jdbc.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    sql,
+                    new String[]{"id"}
+            );
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setBoolean(3, user.isActive());
+
+            return ps;
+        }, keyHolder);
+
+        int newId = keyHolder.getKey().intValue();
+
+        return new User(newId,
+                        user.getName(),
+                        user.getEmail(),
+                        user.isActive());
     }
 
     @Override

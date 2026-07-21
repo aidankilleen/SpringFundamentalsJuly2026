@@ -19,11 +19,28 @@ public class App
 
         UserDao dao = ctx.getBean(UserDao.class);
 
+        User newUser = new User(-1,
+                    "New user",
+                    "new.user@gmail.com",
+                    true);
+
+        User addedUser = dao.addUser(newUser);
+
+        System.out.println(addedUser);
+
+        System.out.println("=====================");
+
+
         if (dao.deleteUser(999)) {
             System.out.println("999 deleted");
         }
 
         List<User> users = dao.getUsers();
+
+        User u = dao.getUser(1000);
+        System.out.println(u);
+        System.out.println("====================");
+
 
         users.forEach(System.out::println);
 

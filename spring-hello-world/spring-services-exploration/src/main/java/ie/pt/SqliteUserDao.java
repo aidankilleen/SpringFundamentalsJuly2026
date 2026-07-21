@@ -1,6 +1,7 @@
 package ie.pt;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ import java.util.List;
  * @author Aidan Killeen
  * @version 1.0
  */
-
+@Repository // use @Repository instead of @Component for Database related beans
 public class SqliteUserDao implements UserDao {
 
-    private static String defaultFileName = "C:\\work\\training\\java\\users.db";
+    private static String defaultFileName = "C:\\work\\training\\java\\userdb.db";
     private Connection conn;
 
     /**
