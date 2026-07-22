@@ -1,24 +1,24 @@
 package ie.pt.springbootwebexploration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UsersController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("")
     List<User> getUsers() {
         return userService.getActiveUsers();
     }
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<User> getUser(@PathVariable int id) {
 
         User user = userService.getUser(id);
@@ -29,9 +29,31 @@ public class UsersController {
             return ResponseEntity.ok(user);
         }
     }
-    // delete (delete)
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteUser(@PathVariable int id) {
+        if (userService.deleteUser(id)) {
+            return ResponseEntity.noContent().build();
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // post (add)
+    @PostMapping("")
+    ResponseEntity<User> addUser(@RequestBody User user) {
 
-    // put (update)
+        User addedUser = userService.addUser(user);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(addedUser);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
+
+        User updatedUser = userService.updateUser(user);
+        return ResponseEntity.ok(updatedUser);
+    }
 }

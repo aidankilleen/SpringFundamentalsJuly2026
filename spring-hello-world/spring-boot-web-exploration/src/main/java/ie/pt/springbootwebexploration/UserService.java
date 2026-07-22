@@ -49,4 +49,13 @@ public class UserService {
     User getUser(int id) {
         return dao.getUser(id);
     }
+
+    public boolean deleteUser(int id) {
+        return dao.deleteUser(id);
+    }
+
+    public User updateUser(User user) {
+
+        return dao.updateUser(user);
+    }
 }
