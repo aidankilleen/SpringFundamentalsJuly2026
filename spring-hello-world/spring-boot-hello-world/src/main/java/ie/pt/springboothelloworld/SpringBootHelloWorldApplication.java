@@ -6,6 +6,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.util.List;
 
 @SpringBootApplication
 public class SpringBootHelloWorldApplication implements CommandLineRunner {
@@ -16,11 +20,15 @@ public class SpringBootHelloWorldApplication implements CommandLineRunner {
     @Autowired
     UserService userService;
 
+    @Autowired
+    JdbcTemplate jdbc;
+
+    @Autowired
+    RowMapper<User> userMapper;
+
     /*
     @Autowired
     ApplicationContext ctx;
-
-
 
     @Autowired
     User user;
@@ -36,8 +44,26 @@ public class SpringBootHelloWorldApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         System.out.println(title);
+
+        /*
+        User addedUser = userService.addUser(new User(-1, "Alice", "alice@gmail.com", true));
+
+        System.out.println(addedUser);
+        */
+
+
+        System.out.println("======================");
         userService.getActiveUsers()
                 .forEach(System.out::println);
+
+
+        /*
+        List<User> users = jdbc.query(
+                "SELECT * FROM users",
+                userMapper);
+
+        users.forEach(System.out::println);
+        */
 
 
         /*

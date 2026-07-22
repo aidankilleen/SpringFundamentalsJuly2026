@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ie.pt</groupId>
-    <artifactId>spring-boot-hello-world</artifactId>
+    <artifactId>spring-boot-web-exploration</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-hello-world</name>
-    <description>spring-boot-hello-world</description>
+    <name>spring-boot-web-exploration</name>
+    <description>spring-boot-web-exploration</description>
     <url/>
     <licenses>
         <license/>
@@ -30,21 +30,23 @@
         <java.version>21</java.version>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- Source: https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>

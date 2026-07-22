@@ -15,7 +15,7 @@ import java.util.List;
  * @author Aidan Killeen
  * @version 1.0
  */
-@Repository// use @Repository instead of @Component for Database related beans
+//@Repository// use @Repository instead of @Component for Database related beans
 public class SqliteUserDao implements UserDao {
 
     @Value("${database.defaultFile}")
