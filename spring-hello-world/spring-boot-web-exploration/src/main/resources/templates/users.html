@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link th:replace="fragments/navigation.html :: bs"/>
+</head>
+<body>
+
+<nav
+    th:replace="fragments/navigation.html :: navigation"/>
+
+<h1 th:text="${title}">xxx</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Active</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getId()}"/>
+            <td th:text="${user.getName()}"/>
+            <td th:text="${user.getEmail()}"/>
+            <td th:if="${user.isActive()}">Active</td>
+            <td th:if="${!user.isActive()}">Inactive</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<div th:replace="fragments/navigation.html :: footer"/>
+</body>
+</html>
