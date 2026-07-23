@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link th:replace="fragments/navigation.html :: bs"/>
+</head>
+<body>
+
+<nav
+    th:replace="fragments/navigation.html :: navigation"/>
+
+<h1>Are You Sure?</h1>
+
+<form
+    th:action="@{/jpa/delete/{id}(id=${id})}"
+    method="post"
+>
+    <input type="hidden" th:value="${id}"/><br>
+    <input
+        class="btn btn-danger"
+        type="submit"
+        value="Ok">
+</form>
+
+
+<div th:replace="fragments/navigation.html :: footer"/>
+</body>
+</html>

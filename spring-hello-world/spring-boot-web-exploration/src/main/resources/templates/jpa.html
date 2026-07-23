@@ -30,6 +30,14 @@
         <td th:text="${user.getEmail()}"/>
         <td th:text="${user.getCreatedAt()}"/>
         <td th:text="${user.getPasswordHash()}"/>
+        <td>
+            <a
+                class="btn btn-danger btn-sm"
+                th:href="@{/jpa/delete/{id}(id=${user.getId()})}">
+                Delete
+            </a>
+
+        </td>
     </tr>
 
     </tbody>
