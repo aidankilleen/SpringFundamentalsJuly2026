@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -65,5 +66,28 @@ public class JpaInvestigationController {
 
 //        return "show_message";
         return "redirect:/jpa";
+    }
+
+    @GetMapping("/jpa/edit/{id}")
+    String editJpaRecord(Model model, @PathVariable Long id) {
+
+        Optional<UserAccount> user = repo.findById(id);
+
+        if (user.isEmpty()) {
+            return "redirect:/jpa";
+        } else {
+            model.addAttribute("adding", false);
+            model.addAttribute("user", user.get());
+            return "user-account-form";
+        }
+    }
+    @PostMapping("/jpa/edit/{id}")
+    String doEditJpaRecord(Model model, @ModelAttribute("user") UserAccount user) {
+
+        System.out.println(user);
+
+        model.addAttribute("title", "Edited");
+        model.addAttribute("message", "editing");
+        return "show_message";
     }
 }

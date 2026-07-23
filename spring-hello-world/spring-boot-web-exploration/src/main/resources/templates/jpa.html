@@ -21,6 +21,7 @@
         <th>Email</th>
         <th>Created At</th>
         <th>Password Hash</th>
+        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -32,10 +33,17 @@
         <td th:text="${user.getPasswordHash()}"/>
         <td>
             <a
+                    class="btn btn-success btn-sm"
+                    th:href="@{/jpa/edit/{id}(id=${user.getId()})}">
+                Edit
+            </a>
+            <a
                 class="btn btn-danger btn-sm"
                 th:href="@{/jpa/delete/{id}(id=${user.getId()})}">
                 Delete
             </a>
+
+
 
         </td>
     </tr>
