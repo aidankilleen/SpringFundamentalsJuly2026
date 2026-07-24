@@ -120,6 +120,12 @@ public class JpaInvestigationController {
         }
         // TODO check that password and confirmPassword are the same
 
+        if (!userDto.password().equals(userDto.confirmPassword())) {
+            bindingResult.rejectValue(
+                    "confirmPassword",
+                    "password.mismatch",
+                    "The passwords don't match");
+        }
 
         // TODO verify email doesn't already exist]
 

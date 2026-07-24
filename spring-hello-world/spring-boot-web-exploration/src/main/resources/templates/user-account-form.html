@@ -86,7 +86,7 @@
                         th:errorclass="is-invalid"/>
                 <div
                         class="invalid-feedback"
-                        th:if="${#fields.hasErrors('password')}"
+                        th:if="${#fields.hasErrors('confirmPassword')}"
                         th:errors="*{confirmPassword}"
                 >
                     Please confirm password
