@@ -16,36 +16,93 @@
 
 <div th:text="${user}"></div>
 
-<form
-        th:action="@{/jpa/edit/{id}(id=${userDto.id()})}"
-        th:object="${userDto}"
-        method="post"
->
-    <input
-        id="id"
-        type="hidden"
-        th:field="*{id}"
-        readonly/><br>
-    <input
-        id="name"
-        type="text"
-        th:field="*{name}"/><br>
-    <input
-            id="email"
-            type="email"
-            th:field="*{email}"/><br>
-    <input
-            id="password"
-            type="password"
-            th:field="*{password}"/><br>
-    <input
-            id="passwordConfirm"
-            type="password"
-            th:field="*{confirmPassword}"/><br>
-    <button type="submit">Save</button>
-</form>
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-8">
+
+            <form
+                    th:action="@{/jpa/edit/{id}(id=${userDto.id()})}"
+                    th:object="${userDto}"
+                    method="post"
+                    novalidate
+            >
+                <input
+                    id="id"
+                    type="hidden"
+                    th:field="*{id}"
+                    readonly/>
+                <label for="name" class="form-label">Name</label>
+                <input
+                    id="name"
+                    type="text"
+                    class="form-control"
+                    th:field="*{name}"
+                    th:errorclass="is-invalid"
+                />
+                <div
+                    class="invalid-feedback"
+                    th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}"
+                >
+                    Please enter a valid email
+                </div>
+
+                <label for="email" class="form-label">Email</label>
+                <input
+                        id="email"
+                        type="email"
+                        class="form-control"
+                        th:field="*{email}"
+                        th:errorclass="is-invalid"/>
+                <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}"
+                >
+                    Please enter a valid name
+                </div>
+
+                <label for="password" class="form-label">Password</label>
+                <input
+                        id="password"
+                        type="password"
+                        class="form-control"
+                        th:field="*{password}"
+                        th:errorclass="is-invalid"/>
+                <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('password')}"
+                        th:errors="*{password}"
+                >
+                    Please enter a password
+                </div>
+                <label for="passwordConfirm" class="form-label">Confirm Password</label>
+                <input
+                        id="passwordConfirm"
+                        type="password"
+                        class="form-control"
+                        th:field="*{confirmPassword}"
+                        th:errorclass="is-invalid"/>
+                <div
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('password')}"
+                        th:errors="*{confirmPassword}"
+                >
+                    Please confirm password
+                </div>
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                >
+                    Save
+                </button>
+            </form>
 
 
+        </div>
+    </div>
+</div>
 <div th:replace="fragments/navigation.html :: footer"/>
 </body>
 </html>

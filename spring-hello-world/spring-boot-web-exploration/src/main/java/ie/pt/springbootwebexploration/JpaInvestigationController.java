@@ -1,9 +1,11 @@
 package ie.pt.springbootwebexploration;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -106,10 +108,45 @@ public class JpaInvestigationController {
     }
     @PostMapping("/jpa/edit/{id}")
     String doEditJpaRecord(Model model,
-                           @ModelAttribute("userDto") UserAccountDto userDto) {
+                           @Valid @ModelAttribute("userDto") UserAccountDto userDto,
+                           BindingResult bindingResult) {
 
-        System.out.println(userDto);
+        System.out.println(bindingResult);
 
+        Optional<UserAccount> acc = repo.findById(userDto.id());
+
+        if (acc.isEmpty()) {
+            return "redirect:/jpa";
+        }
+        // TODO check that password and confirmPassword are the same
+
+
+        // TODO verify email doesn't already exist]
+
+
+        // other validations can be added as well
+
+        if (bindingResult.hasErrors()) {
+            //bindingResult.reject("something went wrong");
+            model.addAttribute("adding", false);
+            return "user-account-form";
+        } else {
+            // save the changes
+            UserAccount account = acc.get();
+
+            account.setName(userDto.name());
+            account.setEmail(userDto.email());
+
+            account.setPasswordHash(
+                    passwordEncoder.encode(userDto.password()));
+
+            account.setCreatedAt(Instant.now());
+            repo.save(account);
+
+            return "redirect:/jpa";
+        }
+        //System.out.println(userDto);
+        /*
         Optional<UserAccount> acc = repo.findById(userDto.id());
 
         if (acc.isEmpty()) {
@@ -133,5 +170,7 @@ public class JpaInvestigationController {
         model.addAttribute("title", "Edited");
         model.addAttribute("message", "saved");
         return "show_message";
+
+         */
     }
 }
