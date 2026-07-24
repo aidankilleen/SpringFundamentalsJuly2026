@@ -24,6 +24,7 @@ public class JpaInvestigationController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Audit("/jpa called")
     @GetMapping("/jpa")
     String getJpaHome(Model model) {
 
@@ -86,6 +87,7 @@ public class JpaInvestigationController {
         return "redirect:/jpa";
     }
 
+
     @GetMapping("/jpa/edit/{id}")
     String editJpaRecord(Model model, @PathVariable Long id) {
 
@@ -118,7 +120,7 @@ public class JpaInvestigationController {
         if (acc.isEmpty()) {
             return "redirect:/jpa";
         }
-        // TODO check that password and confirmPassword are the same
+        // check that password and confirmPassword are the same
 
         if (!userDto.password().equals(userDto.confirmPassword())) {
             bindingResult.rejectValue(
@@ -126,12 +128,8 @@ public class JpaInvestigationController {
                     "password.mismatch",
                     "The passwords don't match");
         }
-
         // TODO verify email doesn't already exist]
-
-
         // other validations can be added as well
-
         if (bindingResult.hasErrors()) {
             //bindingResult.reject("something went wrong");
             model.addAttribute("adding", false);
@@ -179,4 +177,52 @@ public class JpaInvestigationController {
 
          */
     }
+
+    /*
+    @GetMapping("/secure/page1")
+    String getSecurePage() {
+
+        if (user.isLoggedIn()) {
+            return "secure-page";
+        }  else {
+            return "redict:/login";
+        }
+    }
+
+    @GetMapping("/secure/page2")
+    String getAnotherSecurePage() {
+
+        if (user.isLoggedIn()) {
+            return "another-secure-page2";
+        }else {
+            return "redict:/login";
+        }
+    }
+
+    @GetMapping("/secure/page3")
+    String getAnotherSecurePage3() {
+
+        if (user.isLoggedIn()) {
+            return "another-secure-page3";
+        }else {
+            return "redict:/login";
+        }
+    }
+
+     */
+    // a lot of "cross-cutting" functionality is implemented using "aspects"
+    // an aspect wraps the original function / class
+    // and aspect runs some code, decides whether to call the original function, returns
+    // eg @LoggedIn would add the check and if true calls the original function otherwise does
+    // some sort of redirect
+    /*
+    @LoggedIn
+    @GetMapping("/secure/page4")
+    String getAnotherSecurePage4() {
+
+        return "another-secure-page4";
+
+    }
+    */
+
 }

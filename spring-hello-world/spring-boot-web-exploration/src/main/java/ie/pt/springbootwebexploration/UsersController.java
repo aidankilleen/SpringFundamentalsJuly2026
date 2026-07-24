@@ -14,6 +14,7 @@ public class UsersController {
     @Autowired
     UserService userService;
 
+    @Audit("users api requested")
     @GetMapping("")
     List<User> getUsers() {
         return userService.getActiveUsers();
