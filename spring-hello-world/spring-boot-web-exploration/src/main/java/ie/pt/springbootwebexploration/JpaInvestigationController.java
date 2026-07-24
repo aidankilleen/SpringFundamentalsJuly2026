@@ -1,6 +1,7 @@
 package ie.pt.springbootwebexploration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,24 @@ public class JpaInvestigationController {
 
     @Autowired
     UserAccountRepository repo;
-    
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
     @GetMapping("/jpa")
     String getJpaHome(Model model) {
+
+        UserAccountDto dto = new UserAccountDto(1L, "Alice", "alice@gmail.com", "pwd", "pwd");
+
+        System.out.println(dto.name());
+        //dto.name("no setters");
+        System.out.println(dto);
+        UserAccountDto dto2 = new UserAccountDto(1L, "Alice", "alice@gmail.com", "pwd", "pwd");
+        if (dto.equals(dto2)) {
+            System.out.println("Same");
+        } else {
+            System.out.println("Different");
+        }
 
         List<UserAccount> users = repo.findAll();
 
@@ -76,18 +92,46 @@ public class JpaInvestigationController {
         if (user.isEmpty()) {
             return "redirect:/jpa";
         } else {
+
+            UserAccount u = user.get();
+            UserAccountDto dto = new UserAccountDto(u.getId(),
+                        u.getName(),
+                        u.getEmail(),
+                    "",
+                    "");
             model.addAttribute("adding", false);
-            model.addAttribute("user", user.get());
+            model.addAttribute("userDto", dto);
             return "user-account-form";
         }
     }
     @PostMapping("/jpa/edit/{id}")
-    String doEditJpaRecord(Model model, @ModelAttribute("user") UserAccount user) {
+    String doEditJpaRecord(Model model,
+                           @ModelAttribute("userDto") UserAccountDto userDto) {
 
-        System.out.println(user);
+        System.out.println(userDto);
+
+        Optional<UserAccount> acc = repo.findById(userDto.id());
+
+        if (acc.isEmpty()) {
+            return "redirect:/jpa";
+        } else {
+            UserAccount account = acc.get();
+
+            account.setName(userDto.name());
+            account.setEmail(userDto.email());
+
+            account.setPasswordHash(
+                    passwordEncoder.encode(userDto.password()));
+
+            account.setCreatedAt(Instant.now());
+
+            repo.save(account);
+
+
+        }
 
         model.addAttribute("title", "Edited");
-        model.addAttribute("message", "editing");
+        model.addAttribute("message", "saved");
         return "show_message";
     }
 }

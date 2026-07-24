@@ -17,15 +17,31 @@
 <div th:text="${user}"></div>
 
 <form
-        th:action="@{/jpa/edit/{id}(id=${user.getId()})}"
-        th:object="${user}"
+        th:action="@{/jpa/edit/{id}(id=${userDto.id()})}"
+        th:object="${userDto}"
         method="post"
 >
+    <input
+        id="id"
+        type="hidden"
+        th:field="*{id}"
+        readonly/><br>
     <input
         id="name"
         type="text"
         th:field="*{name}"/><br>
-
+    <input
+            id="email"
+            type="email"
+            th:field="*{email}"/><br>
+    <input
+            id="password"
+            type="password"
+            th:field="*{password}"/><br>
+    <input
+            id="passwordConfirm"
+            type="password"
+            th:field="*{confirmPassword}"/><br>
     <button type="submit">Save</button>
 </form>
 
